@@ -14,10 +14,6 @@ namespace Productos_Detalle.Entidades
         
         public int Existencia { get; set; }
 
-        public float Ganancia { get; set; }
-
-        public float Precio { get; set; }
-
         [Required(ErrorMessage = "El costo es obligatorio")]
         [Range(1,int.MaxValue,ErrorMessage = "El costo debe estar entre los datos permitidos")]
         public float Costo { get; set; }
