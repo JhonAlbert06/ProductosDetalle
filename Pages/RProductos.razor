@@ -1,5 +1,5 @@
-@page "/Productos"
-@page "/Productos/{ProductoId:int}"
+@page "/productos"
+
 
 <EditForm Model="producto" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
@@ -9,7 +9,7 @@
         <div class="card">
 
             <div class="card-header">
-                <h3>Registro de productos</h3>
+                <h3>Registro de Productos</h3>
             </div>
 
             <div class="card-body">
@@ -36,13 +36,6 @@
                     <InputText class="form-control" @bind-Value="producto.Descripcion" />
                     <ValidationMessage For="@(() => producto.Descripcion)" />
                 </div>
-
-                @* Existencia *@
-                <div class="form-group">
-                    <label>Existencia</label>
-                    <InputNumber class="form-control" @bind-Value="producto.Existencia" />
-                    <ValidationMessage For="@(() => producto.Existencia)" />
-                </div>
                 
                 @* Costo *@
                 <div class="form-group">
@@ -50,10 +43,16 @@
                     <InputNumber class="form-control" @bind-Value="producto.Costo" />
                 </div>
 
-                @* Valor Inventario *@
+                @* Ganacias *@
                 <div class="form-group">
-                    <label>Valor Inventario</label>
-                    <InputNumber class="form-control" @bind-Value="producto.ValorInventario" />
+                    <label>Ganacia</label>
+                    <InputNumber class="form-control" @bind-Value="producto.Ganancia" />
+                </div>
+
+                @* Precio *@
+                <div class="form-group">
+                    <label>Precio</label>
+                    <InputNumber class="form-control" @bind-Value="producto.Precio" />
                 </div>
 
             </div>
