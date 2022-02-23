@@ -4,10 +4,10 @@ using System.Linq.Expressions;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-using Ejemplo_Clase1522022.DAL;
-using Ejemplo_Clase1522022.Entidades;
+using Productos_Detalle.DAL;
+using Productos_Detalle.Entidades;
 
-namespace Ejemplo_Clase1522022.BLL
+namespace Productos_Detalle.BLL
 {
     public class ProductosBLL
     {
