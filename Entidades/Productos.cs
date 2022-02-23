@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Ejemplo_Clase1522022.Entidades
+namespace Productos_Detalle.Entidades
 {
     public class Productos
     {
