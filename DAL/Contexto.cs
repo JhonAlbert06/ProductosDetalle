@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Ejemplo_Clase1522022.Entidades;
+using Productos_Detalle.Entidades;
 
-namespace Ejemplo_Clase1522022.DAL
+namespace Productos_Detalle.DAL
 {
     public class Contexto : DbContext
     {
