@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Components.Web;
 using Productos_Detalle.Data;
 using Productos_Detalle.DAL;
 
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
