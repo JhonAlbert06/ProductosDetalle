@@ -10,7 +10,7 @@ namespace Productos_Detalle.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=Data/Productos.db");            
+            optionsBuilder.UseSqlite(@"Data Source=Data/Productos.db");            
         }
     }
 }
