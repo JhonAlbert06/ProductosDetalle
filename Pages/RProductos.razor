@@ -5,7 +5,7 @@
     <DataAnnotationsValidator />
 
     <div className=".container-sm">
-        
+
         <div class="card">
 
             <div class="card-header">
@@ -36,7 +36,7 @@
                     <InputText class="form-control" @bind-Value="producto.Descripcion" />
                     <ValidationMessage For="@(() => producto.Descripcion)" />
                 </div>
-                
+
                 @* Costo *@
                 <div class="form-group">
                     <label>Costo</label>
@@ -58,7 +58,7 @@
             </div>
 
             <div class="card-footer">
-                
+
                 @* Botones *@
                 <div class="form-group text-center" display: inline-block>
                     <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">Nuevo</button>
@@ -70,7 +70,30 @@
 
         </div>
 
-        <div>
+        <div class="card-body">
+
+            <form>
+                <div class="input-group d-flex align-items-end">
+
+                    <button type="button" class="btn btn-warning" @onclick="Buscar">
+                        ➕ Agregar Detalle
+                    </button>
+                </div>
+                <br>
+                <table class="table table-secondary">
+                    <thead class="thead-dark">
+                        <tr class="table-info">
+                            <th>Id</th>
+                            <th>Presentacion</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </form>
 
         </div>
 
@@ -92,7 +115,7 @@
         if (producto.ProductoId > 0)
         {
             var encontrado = ProductosBLL.Buscar(producto.ProductoId);
-            
+
             if (encontrado != null)
                 this.producto = encontrado;
             //else mostrar un toast (de que no se encontró)
@@ -111,11 +134,12 @@
         bool eliminado;
 
         eliminado = ProductosBLL.Eliminar(producto.ProductoId);
-        if(eliminado)
+        if (eliminado)
         {
             //Llamar el metodo nuevo
             //Mostrar toast diciendo que terminó
-        }else
+        }
+        else
         {
             //mostrar toast de que no fue posible eliminar
         }
