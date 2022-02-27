@@ -100,9 +100,32 @@
                 <form>
                     <div class="input-group d-flex align-items-end">
 
-                        <button type="button" class="btn btn-success" @onclick="Buscar">
+                        <div class="row">
+
+                            @* Costo *@
+                            <div class="form-group col">
+                                <label>Presentacion</label>
+                                <InputText class="form-control" @bind-Value="producto.Descripcion" />
+                            </div>
+
+                            @* Ganacias *@
+                            <div class="form-group col">
+                                <label>Cantidad</label>
+                                <InputNumber class="form-control" @bind-Value="producto.Ganancia" />
+                            </div>
+
+                            @* Precio *@
+                            <div class="form-group col">
+                                <label>Precio</label>
+                                <InputNumber class="form-control" @bind-Value="producto.Precio" />
+                            </div>
+
+                        </div>
+
+                        <button type="button" class="btn btn-success" @onclick="AgregarDetalle">
                             ➕ Agregar Detalle
                         </button>
+
                     </div>
                     <br>
                     <table class="table table-secondary">
@@ -126,6 +149,11 @@
                 </form>
 
             </div>
+
+            <div class="card-footer">
+                
+            </div>
+
         </div>
 
     </div>
@@ -135,6 +163,10 @@
 @code {
     public Productos producto { get; set; } = new Productos();
 
+    private void AgregarDetalle()
+    {
+
+    }
     private void Nuevo()
     {
 
@@ -177,4 +209,6 @@
 
 
     }
+
+
 }
