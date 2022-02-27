@@ -1,6 +1,5 @@
 @page "/rproductos"
 
-
 <EditForm Model="producto" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
 
@@ -12,47 +11,65 @@
                 <h3>Registro de Productos</h3>
             </div>
 
-            <div class="card-body">
+            <div class="card-body ">
 
                 <div class="form-row align-items-center">
                     <div class="col">
+
                         <div class="form-group">
+
                             <label>Producto Id</label>
-                            <div class="input-group">
+
+                            <div class="input-group row">
+
                                 <InputNumber @bind-Value="producto.ProductoId" class="form-control col-4" />
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-primary input-group-text"
+
+                                <div class="input-group-append col">
+                                    <button type="button" class="btn btn-success input-group-text"
                                         @onclick="Buscar">Buscar</button>
                                 </div>
+
                             </div>
+
                         </div>
+
                     </div>
                 </div>
 
+                <div class="row">
 
-                @* Descripción *@
-                <div class="form-group">
-                    <label>Descripción</label>
-                    <InputText class="form-control" @bind-Value="producto.Descripcion" />
-                    <ValidationMessage For="@(() => producto.Descripcion)" />
+                    @* Descripción *@
+                    <div class="form-group col">
+                        <label>Descripción</label>
+                        <InputText class="form-control" @bind-Value="producto.Descripcion" />
+                        <ValidationMessage For="@(() => producto.Descripcion)" />
+                    </div>
+
                 </div>
 
-                @* Costo *@
-                <div class="form-group">
-                    <label>Costo</label>
-                    <InputNumber class="form-control" @bind-Value="producto.Costo" />
-                </div>
+                <div class="row">
 
-                @* Ganacias *@
-                <div class="form-group">
-                    <label>Ganacia</label>
-                    <InputNumber class="form-control" @bind-Value="producto.Ganancia" />
-                </div>
+                    @* Costo *@
+                    <div class="form-group col">
+                        <label>Costo</label>
+                        <InputNumber class="form-control" @bind-Value="producto.Costo" />
+                        <ValidationMessage For="@(() => producto.Costo)" />
+                    </div>
 
-                @* Precio *@
-                <div class="form-group">
-                    <label>Precio</label>
-                    <InputNumber class="form-control" @bind-Value="producto.Precio" />
+                    @* Ganacias *@
+                    <div class="form-group col">
+                        <label>Ganacia</label>
+                        <InputNumber class="form-control" @bind-Value="producto.Ganancia" />
+                        <ValidationMessage For="@(() => producto.Ganancia)" />
+                    </div>
+
+                    @* Precio *@
+                    <div class="form-group col">
+                        <label>Precio</label>
+                        <InputNumber class="form-control" @bind-Value="producto.Precio" />
+                        <ValidationMessage For="@(() => producto.Precio)" />
+                    </div>
+
                 </div>
 
             </div>
@@ -70,31 +87,45 @@
 
         </div>
 
-        <div class="card-body">
+        <br>
 
-            <form>
-                <div class="input-group d-flex align-items-end">
+        <div class="card">
 
-                    <button type="button" class="btn btn-warning" @onclick="Buscar">
-                        ➕ Agregar Detalle
-                    </button>
-                </div>
-                <br>
-                <table class="table table-secondary">
-                    <thead class="thead-dark">
-                        <tr class="table-info">
-                            <th>Id</th>
-                            <th>Presentacion</th>
-                            <th>Cantidad</th>
-                            <th>Precio</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                    </tbody>
-                </table>
-            </form>
+            <div class="card-header">
+                <h3>Detalle</h3>
+            </div>
 
+            <div class="card-body">
+
+                <form>
+                    <div class="input-group d-flex align-items-end">
+
+                        <button type="button" class="btn btn-success" @onclick="Buscar">
+                            ➕ Agregar Detalle
+                        </button>
+                    </div>
+                    <br>
+                    <table class="table table-secondary">
+                        <thead class="thead-dark">
+                            <tr class="table-info">
+                                <th>Id</th>
+                                <th>Presentacion</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <th>1</th>
+                            <th>Lorem ipsum dolor</th>
+                            <th>40</th>
+                            <th>$ 500</th>
+
+                        </tbody>
+                    </table>
+                </form>
+
+            </div>
         </div>
 
     </div>
