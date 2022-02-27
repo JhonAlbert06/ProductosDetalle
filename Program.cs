@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Productos_Detalle.Data;
 using Productos_Detalle.DAL;
-
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,11 +11,11 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 
-builder.Services.AddDbContext<Contexto>(options => 
+/* builder.Services.AddDbContext<Contexto>(options => 
     
     options.UseSqlite(builder.Configuration.GetConnectionString("ConStr"))
     
-    );
+    ); */
 
 var app = builder.Build();
 
