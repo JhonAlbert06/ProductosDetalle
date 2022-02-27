@@ -11,11 +11,13 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 
-/* builder.Services.AddDbContext<Contexto>(options => 
+/*
+builder.Services.AddDbContext<Contexto>(options => 
     
     options.UseSqlite(builder.Configuration.GetConnectionString("ConStr"))
     
-    ); */
+    );
+*/
 
 var app = builder.Build();
 
