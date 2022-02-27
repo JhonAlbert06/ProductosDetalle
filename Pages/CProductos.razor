@@ -4,12 +4,17 @@
 
 <EditForm Model="lista">
     <DataAnnotationsValidator />
+    
     <div class="card">
+    
         <div class="card-header">
-            <h3>Consulta de Tareas</h3>
+            <h3>Consulta de Productos</h3>
         </div>
+    
         <div class="card-body">
+    
             <form>
+    
                 <div class="input-group d-flex align-items-end">
                     <select class="form-control col-2" @bind="Filtro">
                         <option value="0">Todos</option>
@@ -29,8 +34,11 @@
                 </div>
                 
             </form>
+    
         </div>
+    
         <table class="table table-secondary">
+    
             <thead class="thead-dark">
                 <tr class="table-info">
                     <th>Id</th>
@@ -38,6 +46,7 @@
                     <th>Descripción de la tarea</th>
                 </tr>
             </thead>
+    
             <tbody>
                 @foreach (var item in lista)
                 {
@@ -47,7 +56,9 @@
                     </tr>
                 }
             </tbody>
+    
         </table>
+    
     </div>
 </EditForm>
 
