@@ -56,13 +56,12 @@
                         <ValidationMessage For="@(() => producto.Costo)" />
                     </div>
 
-                    @* Ganacias *@
+                    @* Valor Inventario *@
                     <div class="form-group col">
-                        <label>Ganacia</label>
-                        <InputNumber class="form-control" @bind-Value="producto.Ganancia" />
-                        <ValidationMessage For="@(() => producto.Ganancia)" />
+                        <label>Existencia</label>
+                        <InputNumber class="form-control" @bind-Value="producto.Existencia" />
                     </div>
-
+                    
                     @* Precio *@
                     <div class="form-group col">
                         <label>Precio</label>
@@ -70,6 +69,29 @@
                         <ValidationMessage For="@(() => producto.Precio)" />
                     </div>
 
+                </div>
+
+                <div class="row">
+
+                    @* Valor Inventario *@
+                    <div class="form-group col">
+                        <label>Valor Inventario</label>
+                        <InputNumber class="form-control" @bind-Value="producto.ValorInventario" />
+                    </div>
+
+                    @* Ganacias *@
+                    <div class="form-group col">
+                        <label>Ganacia</label>
+                        <InputNumber class="form-control" @bind-Value="producto.Ganancia" />
+                        <ValidationMessage For="@(() => producto.Ganancia)" />
+                    </div>
+
+                    @* Ganacias *@
+                    <div class="form-group col">
+                        <label>Cantidad</label>
+                        <InputNumber class="form-control" @bind-Value="detalle.Cantidad" />
+                        <ValidationMessage For="@(() => producto.Ganancia)" />
+                    </div>
                 </div>
 
             </div>
@@ -105,19 +127,19 @@
                             @* Costo *@
                             <div class="form-group col">
                                 <label>Presentacion</label>
-                                <InputText class="form-control" @bind-Value="producto.Descripcion" />
+                                <InputText class="form-control" @bind-Value="detalle.Descripcion" />
                             </div>
 
                             @* Ganacias *@
                             <div class="form-group col">
                                 <label>Cantidad</label>
-                                <InputNumber class="form-control" @bind-Value="producto.Ganancia" />
+                                <InputNumber class="form-control" @bind-Value="detalle.Cantidad" />
                             </div>
 
                             @* Precio *@
                             <div class="form-group col">
                                 <label>Precio</label>
-                                <InputNumber class="form-control" @bind-Value="producto.Precio" />
+                                <InputNumber class="form-control" @bind-Value="detalle.Precio" />
                             </div>
 
                         </div>
@@ -151,7 +173,7 @@
             </div>
 
             <div class="card-footer">
-                
+
             </div>
 
         </div>
@@ -162,6 +184,7 @@
 
 @code {
     public Productos producto { get; set; } = new Productos();
+    public ProductosDetalle detalle { get; set; } = new ProductosDetalle();
 
     private void AgregarDetalle()
     {
@@ -189,7 +212,8 @@
 
     public void Guardar()
     {
-        var guardado = ProductosBLL.Guardar(producto);
+        CalculoValorInventario();
+        //var guardado = ProductosBLL.Guardar(producto);
     }
 
     public void Eliminar()
@@ -207,6 +231,18 @@
             //mostrar toast de que no fue posible eliminar
         }
 
+
+    }
+
+    private void CalculoValorInventario()
+    {
+        double costo = producto.Costo;
+        double existencia = producto.Existencia;
+
+        producto.ValorInventario = costo * existencia;
+    }
+
+    private void CalcularGanancia(){
 
     }
 
