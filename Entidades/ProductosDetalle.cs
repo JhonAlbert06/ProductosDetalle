@@ -14,6 +14,14 @@ namespace Productos_Detalle.Entidades
         public double Cantidad { get; set; }
         public double Precio { get; set; }
 
+        public ProductosDetalle(int productoId, string descripcion, double cantidad, double precio)
+        {
+            this.ProductoId = productoId;
+            this.Descripcion = descripcion;
+            this.Cantidad = cantidad;
+            this.Precio = precio;
+        }
+
     }
 
 }
