@@ -22,9 +22,24 @@ namespace Productos_Detalle.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<double>("Costo")
+                        .HasColumnType("REAL");
+
                     b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<double>("Existencia")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("Ganancia")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("Precio")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("ValorInventario")
+                        .HasColumnType("REAL");
 
                     b.HasKey("ProductoId");
 
@@ -43,15 +58,15 @@ namespace Productos_Detalle.Migrations
                     b.Property<double>("Costo")
                         .HasColumnType("REAL");
 
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<double>("Ganancia")
                         .HasColumnType("REAL");
 
                     b.Property<double>("Precio")
                         .HasColumnType("REAL");
+
+                    b.Property<string>("Presentacion")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("ProductoId")
                         .HasColumnType("INTEGER");
