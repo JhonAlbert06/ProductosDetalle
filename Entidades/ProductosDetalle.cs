@@ -11,6 +11,8 @@ namespace Productos_Detalle.Entidades
         public string Descripcion { get; set; }
         public double Cantidad { get; set; }
         public double Precio { get; set; }
+        public double Costo { get; set; }
+        public double Ganancia { get; set; }
 
         public ProductosDetalle()
         {
