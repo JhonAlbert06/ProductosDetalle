@@ -8,7 +8,7 @@ namespace Productos_Detalle.Entidades
         [Key]
         public int Id { get; set; }
         public int ProductoId { get; set; }
-        public string Descripcion { get; set; }
+        public string Presentacion { get; set; }
         public double Cantidad { get; set; }
         public double Precio { get; set; }
         public double Costo { get; set; }
@@ -18,7 +18,7 @@ namespace Productos_Detalle.Entidades
         {
             this.Id = 0;
             this.ProductoId = 0;
-            this.Descripcion = null;
+            this.Presentacion = null;
             this.Cantidad = 0;
             this.Precio = 0;
         }
@@ -26,7 +26,7 @@ namespace Productos_Detalle.Entidades
         {
             this.Id = 0;
             this.ProductoId = productoId;
-            this.Descripcion = descripcion;
+            this.Presentacion = descripcion;
             this.Cantidad = cantidad;
             this.Precio = precio;
         }
