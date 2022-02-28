@@ -5,7 +5,7 @@
 <EditForm Model="producto" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
 
-    <div className=".container-sm">
+    <div className="container">
 
         <div class="card"  style="box-shadow: 8px 8px rgba(0, 0, 0, 0.26);">
 
@@ -74,7 +74,7 @@
                     @* Ganacia *@
                     <div class="form-group col">
                         <label>Ganacia</label>
-                        <InputNumber class="form-control" @bind-Value="producto.Ganancia" />
+                        <InputNumber aria-readonly="true" class="form-control" @bind-Value="producto.Ganancia" />
                         <ValidationMessage For="@(() => producto.Ganancia)" />
                     </div>
 
@@ -132,7 +132,7 @@
                         @* Ganacia *@
                         <div class="form-group col">
                             <label>Ganacia</label>
-                            <InputNumber class="form-control" @bind-Value="detalle.Ganancia" />
+                            <InputNumber aria-readonly="true" class="form-control" @bind-Value="detalle.Ganancia" />
                             <ValidationMessage For="@(() => detalle.Ganancia)" />
                         </div>
 
@@ -182,13 +182,28 @@
     public Productos producto { get; set; } = new Productos();
     public ProductosDetalle detalle { get; set; } = new ProductosDetalle();
 
+    private void NuevoDetalle()
+    {
+        detalle = new ProductosDetalle();
+    }
+
     private void AgregarDetalle()
     {
-
+        if (ProductosBLL.Buscar(this.producto.ProductoId) != null)
+        {
+            this.producto.Detalle.Add(this.detalle);
+            Guardar();
+            NuevoDetalle();
+        }
+        else
+        {
+            toastService.ShowError("Se necesita la referencia de un producto existente para guardar sus detalles.");
+        }
     }
     private void Nuevo()
     {
-
+        producto = new Productos();
+        NuevoDetalle();
     }
 
     private void Buscar()
@@ -242,7 +257,6 @@
         {
             toastService.ShowError("No se ha podido eliminar el pproducto");
         }
-
 
     }
 
