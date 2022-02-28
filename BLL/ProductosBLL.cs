@@ -23,8 +23,8 @@ namespace Productos_Detalle.BLL
 
             try
             {
-                contexto.Productos.Add(producto);
-                paso = contexto.SaveChanges() > 0;
+                if (contexto.Productos.Add(producto) != null);
+                    paso = contexto.SaveChanges() > 0;
             }
             catch (Exception)
             {
@@ -45,6 +45,11 @@ namespace Productos_Detalle.BLL
 
             try
             {
+                contexto.Database.ExecuteSqlRaw($"delete from ProductosDetalle where ProductoId={producto.ProductoId}");
+                foreach (var anterior in producto.Detalle)
+                {
+                    contexto.Entry(anterior).State = EntityState.Added;    
+                }
                 contexto.Entry(producto).State = EntityState.Modified;
                 paso = contexto.SaveChanges() > 0;
             }
@@ -69,11 +74,9 @@ namespace Productos_Detalle.BLL
             {
                 var producto = contexto.Productos.Find(id);
 
-                if (producto != null)
-                {
-                    contexto.Productos.Remove(producto);
-                    paso = contexto.SaveChanges() > 0;
-                }
+                contexto.Entry(producto).State = EntityState.Deleted;
+
+                paso = contexto.SaveChanges() > 0;
             }
             catch (Exception)
             {
@@ -89,12 +92,14 @@ namespace Productos_Detalle.BLL
 
         public static Productos Buscar(int id)
         {
-            Productos producto;
+            Productos producto = new Productos();
             Contexto contexto = new Contexto();
 
             try
             {
-                producto = contexto.Productos.Find(id);
+                producto = contexto.Productos.Include(x => x.Detalle)
+                            .Where(p => p.ProductoId == id)
+                            .SingleOrDefault();
             }
             catch (Exception)
             {
