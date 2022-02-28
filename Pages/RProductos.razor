@@ -7,7 +7,7 @@
 
     <div className="container">
 
-        <div class="card"  style="box-shadow: 8px 8px rgba(0, 0, 0, 0.26);">
+        <div class="card" style="box-shadow: 8px 8px rgba(0, 0, 0, 0.26);">
 
             <div class="card-header">
                 <h3>Registro de Productos</h3>
@@ -80,30 +80,11 @@
 
                 </div>
 
-            </div>
-
-            <div class="card-footer">
-
-                @* Botones *@
-                <div class="form-group text-center" display: inline-block>
-                    <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">Nuevo</button>
-                    <button type="submit" class="btn btn-lg btn-success">Guardar</button>
-                    <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">Eliminar</button>
+                <hr>
+                
+                <div class="card-header">
+                    <h3>Detalle</h3>
                 </div>
-
-            </div>
-
-        </div>
-
-        <br>
-
-        <div class="card">
-
-            <div class="card-header">
-                <h3>Detalle</h3>
-            </div>
-
-            <div class="card-body">
 
                 <form>
                     <div class="input-group d-flex align-items-end">
@@ -170,8 +151,16 @@
 
             </div>
 
-            <div class="card-footer">
 
+        </div>
+
+        <div class="card-footer">
+
+            @* Botones *@
+            <div class="form-group text-center" display: inline-block>
+                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">Nuevo</button>
+                <button type="submit" class="btn btn-lg btn-success">Guardar</button>
+                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">Eliminar</button>
             </div>
 
         </div>
@@ -223,7 +212,7 @@
                 this.producto = encontrado;
                 toastService.ShowInfo("Producto encontrado...");
             }
-            else 
+            else
             {
                 toastService.ShowError("Debe indicar el ID de un producto existente...");
             }
@@ -252,7 +241,7 @@
         bool eliminado;
 
         eliminado = ProductosBLL.Eliminar(producto.ProductoId);
-        
+
         if (eliminado)
         {
             Nuevo();
@@ -275,11 +264,11 @@
 
     private void CalcularGanancia()
     {
-        producto.Ganancia =(((producto.Precio - producto.Costo) * 100) / producto.Costo);
+        producto.Ganancia = (((producto.Precio - producto.Costo) * 100) / producto.Costo);
     }
 
     private void CalcularGananciaDetalle()
     {
-        detalle.Ganancia =(((detalle.Precio - detalle.Costo) * 100) / detalle.Costo);
+        detalle.Ganancia = (((detalle.Precio - detalle.Costo) * 100) / detalle.Costo);
     }
 }
