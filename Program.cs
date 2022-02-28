@@ -4,6 +4,8 @@ using Productos_Detalle.Data;
 using Productos_Detalle.DAL;
 using Productos_Detalle.Entidades;
 using Microsoft.EntityFrameworkCore;
+using Blazored.Toast;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddBlazoredToast();
 
 /*
 builder.Services.AddDbContext<Contexto>(options => 
