@@ -6,6 +6,7 @@ namespace Productos_Detalle.Entidades
     public class Productos
     {
         [Key]
+        [Range(0, int.MaxValue, ErrorMessage = "La existencia debe estar en el rango de {1} y {2}.")]
         public int ProductoId { get; set; }
         
         [Required(ErrorMessage = "Es obligatorio introducir la descripcion")]
