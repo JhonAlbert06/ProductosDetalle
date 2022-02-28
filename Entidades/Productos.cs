@@ -10,7 +10,7 @@ namespace Productos_Detalle.Entidades
         
         [Required(ErrorMessage = "Es obligatorio introducir la descripcion")]
         public string Descripcion { get; set; }
-        /* 
+         
         [Required(ErrorMessage = "La existencia no puede estar vacio...")]
         [Range(1, double.MaxValue, ErrorMessage = "La existencia debe estar en el rango de {1} y {2}.")]
         public double Existencia { get; set; }
@@ -26,7 +26,7 @@ namespace Productos_Detalle.Entidades
         
         [Required(ErrorMessage = "El campo Precio no puede estar vacio...")]
         [Range(1, double.MaxValue, ErrorMessage = "El Precio debe estar en el rango de {1} y {2}.")]
-        public double Precio { get; set; } */
+        public double Precio { get; set; } 
 
         [ForeignKey("ProductoId")]
         public List<ProductosDetalle> Detalle { get; set; } = new List<ProductosDetalle> ();
