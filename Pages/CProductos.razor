@@ -19,7 +19,7 @@
                     <select class="form-control col-2" @bind="Filtro">
                         <option value="0">Todos</option>
                         <option value="1">Id</option>
-                        <option value="3">Descripción</option>
+                        <option value="2">Descripción</option>
                     </select>
 
                     <div class="flex-fill mx-2">
@@ -44,8 +44,8 @@
                     <th>Descripción</th>
                     <th>Costo</th>
                     <th>Cantidad</th>
-                    <th>Ganancia</th>
                     <th>Precio</th>
+                    <th>Ganacia</th>
                 </tr>
             </thead>
     
@@ -71,7 +71,6 @@
     public string Criterio { get; set; }
     public List<Productos> lista { get; set; } = new List<Productos>();
 
-        
     private void Buscar()
     {
 
@@ -81,11 +80,11 @@
         {
             switch(Filtro)
             {
-                case "0":
+                case "1":
                     lista = ProductosBLL.GetList(t => t.ProductoId == int.Parse(Criterio));
                 break;
 
-                case "1":
+                case "2":
                     lista = ProductosBLL.GetList(t => t.Descripcion.ToLower().Contains(Criterio.ToLower())); 
                 break;
             }
