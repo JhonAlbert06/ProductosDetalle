@@ -149,6 +149,7 @@
                                 <th>Id</th>
                                 <th>Presentacion</th>
                                 <th>Cantidad</th>
+                                <th>Costo</th>
                                 <th>Precio</th>
                             </tr>
                         </thead>
@@ -159,7 +160,8 @@
                                     <td>@item.ProductoId</td>
                                     <td>@item.Presentacion</td>
                                     <td>@item.Cantidad</td>
-                                    <td>@item.Precio</td>
+                                    <td>@item.Costo</td>
+                                    <td>RD$ @item.Precio</td>
                                 </tr>
                             }
                         </tbody>
@@ -189,6 +191,9 @@
 
     private void AgregarDetalle()
     {
+        CalcularGananciaDetalle();
+        detalle.Cantidad = producto.Existencia;
+
         if (ProductosBLL.Buscar(this.producto.ProductoId) != null)
         {
             this.producto.Detalle.Add(this.detalle);
@@ -273,5 +278,8 @@
         producto.Ganancia =(((producto.Precio - producto.Costo) * 100) / producto.Costo);
     }
 
-
+    private void CalcularGananciaDetalle()
+    {
+        detalle.Ganancia =(((detalle.Precio - detalle.Costo) * 100) / detalle.Costo);
+    }
 }
