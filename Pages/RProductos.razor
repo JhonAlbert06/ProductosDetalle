@@ -45,53 +45,32 @@
                         <ValidationMessage For="@(() => producto.Descripcion)" />
                     </div>
 
+
+
                 </div>
 
                 <div class="row">
-
                     @* Costo *@
                     <div class="form-group col">
                         <label>Costo</label>
-                        <InputNumber class="form-control" @bind-Value="producto.Costo" />
-                        <ValidationMessage For="@(() => producto.Costo)" />
+                        <InputNumber class="form-control" @bind-Value="detalle.Costo" />
+                        <ValidationMessage For="@(() => producto.Descripcion)" />
                     </div>
 
-                    @* Valor Inventario *@
-                    <div class="form-group col">
-                        <label>Existencia</label>
-                        <InputNumber class="form-control" @bind-Value="producto.Existencia" />
-                    </div>
-                    
                     @* Precio *@
                     <div class="form-group col">
                         <label>Precio</label>
-                        <InputNumber class="form-control" @bind-Value="producto.Precio" />
-                        <ValidationMessage For="@(() => producto.Precio)" />
+                        <InputNumber class="form-control" @bind-Value="detalle.Precio" />
+                        <ValidationMessage For="@(() => producto.Descripcion)" />
                     </div>
 
-                </div>
-
-                <div class="row">
-
-                    @* Valor Inventario *@
-                    <div class="form-group col">
-                        <label>Valor Inventario</label>
-                        <InputNumber class="form-control" @bind-Value="producto.ValorInventario" />
-                    </div>
-
-                    @* Ganacias *@
+                    @* Ganacia *@
                     <div class="form-group col">
                         <label>Ganacia</label>
-                        <InputNumber class="form-control" @bind-Value="producto.Ganancia" />
-                        <ValidationMessage For="@(() => producto.Ganancia)" />
+                        <InputNumber class="form-control" @bind-Value="detalle.Ganancia" />
+                        <ValidationMessage For="@(() => producto.Descripcion)" />
                     </div>
 
-                    @* Ganacias *@
-                    <div class="form-group col">
-                        <label>Cantidad</label>
-                        <InputNumber class="form-control" @bind-Value="detalle.Cantidad" />
-                        <ValidationMessage For="@(() => producto.Ganancia)" />
-                    </div>
                 </div>
 
             </div>
@@ -122,28 +101,6 @@
                 <form>
                     <div class="input-group d-flex align-items-end">
 
-                        <div class="row">
-
-                            @* Costo *@
-                            <div class="form-group col">
-                                <label>Presentacion</label>
-                                <InputText class="form-control" @bind-Value="detalle.Descripcion" />
-                            </div>
-
-                            @* Ganacias *@
-                            <div class="form-group col">
-                                <label>Cantidad</label>
-                                <InputNumber class="form-control" @bind-Value="detalle.Cantidad" />
-                            </div>
-
-                            @* Precio *@
-                            <div class="form-group col">
-                                <label>Precio</label>
-                                <InputNumber class="form-control" @bind-Value="detalle.Precio" />
-                            </div>
-
-                        </div>
-
                         <button type="button" class="btn btn-success" @onclick="AgregarDetalle">
                             ➕ Agregar Detalle
                         </button>
@@ -160,12 +117,15 @@
                             </tr>
                         </thead>
                         <tbody>
-
-                            <th>1</th>
-                            <th>Lorem ipsum dolor</th>
-                            <th>40</th>
-                            <th>$ 500</th>
-
+                            @foreach (var item in producto.Detalle)
+                            {
+                                <tr>
+                                    <td>@item.ProductoId</td>
+                                    <td>@item.Descripcion</td>
+                                    <td>@item.Cantidad</td>
+                                    <td>@item.Precio</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </form>
@@ -213,7 +173,7 @@
     public void Guardar()
     {
         CalculoValorInventario();
-        //var guardado = ProductosBLL.Guardar(producto);
+        var guardado = ProductosBLL.Guardar(producto);
     }
 
     public void Eliminar()
@@ -236,14 +196,10 @@
 
     private void CalculoValorInventario()
     {
-        double costo = producto.Costo;
-        double existencia = producto.Existencia;
-
-        producto.ValorInventario = costo * existencia;
     }
 
-    private void CalcularGanancia(){
-
+    private void CalcularGanancia()
+    {
     }
 
 
