@@ -8,6 +8,14 @@ namespace Productos_Detalle.DAL
 
         public DbSet<Productos> Productos { get; set; } 
 
+        public Contexto()
+        {
+            
+        }
+        public Contexto(DbContextOptions<Contexto> options) : base(options)
+        {
+
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite(@"Data Source=Data/Productos.db");            
