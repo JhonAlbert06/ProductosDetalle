@@ -1,11 +1,13 @@
 @page "/rproductos"
 
+@inject IToastService toastService
+
 <EditForm Model="producto" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
 
     <div className=".container-sm">
 
-        <div class="card">
+        <div class="card"  style="box-shadow: 8px 8px rgba(0, 0, 0, 0.26);">
 
             <div class="card-header">
                 <h3>Registro de Productos</h3>
@@ -45,30 +47,35 @@
                         <ValidationMessage For="@(() => producto.Descripcion)" />
                     </div>
 
-
-
                 </div>
 
                 <div class="row">
                     @* Costo *@
                     <div class="form-group col">
                         <label>Costo</label>
-                        <InputNumber class="form-control" @bind-Value="detalle.Costo" />
-                        <ValidationMessage For="@(() => producto.Descripcion)" />
+                        <InputNumber class="form-control" @bind-Value="producto.Costo" />
+                        <ValidationMessage For="@(() => producto.Costo)" />
+                    </div>
+
+                    @* Existencia *@
+                    <div class="form-group col">
+                        <label>Existencia</label>
+                        <InputNumber class="form-control" @bind-Value="producto.Existencia" />
+                        <ValidationMessage For="@(() => producto.Existencia)" />
                     </div>
 
                     @* Precio *@
                     <div class="form-group col">
                         <label>Precio</label>
-                        <InputNumber class="form-control" @bind-Value="detalle.Precio" />
-                        <ValidationMessage For="@(() => producto.Descripcion)" />
+                        <InputNumber class="form-control" @bind-Value="producto.Precio" />
+                        <ValidationMessage For="@(() => producto.Precio)" />
                     </div>
 
                     @* Ganacia *@
                     <div class="form-group col">
                         <label>Ganacia</label>
-                        <InputNumber class="form-control" @bind-Value="detalle.Ganancia" />
-                        <ValidationMessage For="@(() => producto.Descripcion)" />
+                        <InputNumber class="form-control" @bind-Value="producto.Ganancia" />
+                        <ValidationMessage For="@(() => producto.Ganancia)" />
                     </div>
 
                 </div>
@@ -101,6 +108,35 @@
                 <form>
                     <div class="input-group d-flex align-items-end">
 
+                        @* Presentacion *@
+                        <div class="form-group col">
+                            <label>Presentacion</label>
+                            <InputText class="form-control" @bind-Value="detalle.Presentacion" />
+                            <ValidationMessage For="@(() => detalle.Presentacion)" />
+                        </div>
+
+                        @* Costo *@
+                        <div class="form-group col">
+                            <label>Costo</label>
+                            <InputNumber class="form-control" @bind-Value="detalle.Costo" />
+                            <ValidationMessage For="@(() => detalle.Costo)" />
+                        </div>
+
+                        @* Precio *@
+                        <div class="form-group col">
+                            <label>Precio</label>
+                            <InputNumber class="form-control" @bind-Value="detalle.Precio" />
+                            <ValidationMessage For="@(() => detalle.Precio)" />
+                        </div>
+
+                        @* Ganacia *@
+                        <div class="form-group col">
+                            <label>Ganacia</label>
+                            <InputNumber class="form-control" @bind-Value="detalle.Ganancia" />
+                            <ValidationMessage For="@(() => detalle.Ganancia)" />
+                        </div>
+
+
                         <button type="button" class="btn btn-success" @onclick="AgregarDetalle">
                             ➕ Agregar Detalle
                         </button>
@@ -121,7 +157,7 @@
                             {
                                 <tr>
                                     <td>@item.ProductoId</td>
-                                    <td>@item.Descripcion</td>
+                                    <td>@item.Presentacion</td>
                                     <td>@item.Cantidad</td>
                                     <td>@item.Precio</td>
                                 </tr>
@@ -163,9 +199,14 @@
             var encontrado = ProductosBLL.Buscar(producto.ProductoId);
 
             if (encontrado != null)
+            {
                 this.producto = encontrado;
-            //else mostrar un toast (de que no se encontró)
-
+                toastService.ShowInfo("Producto encontrado...");
+            }
+            else 
+            {
+                toastService.ShowError("Debe indicar el ID de un producto existente...");
+            }
 
         }
     }
@@ -173,7 +214,17 @@
     public void Guardar()
     {
         CalculoValorInventario();
+        CalcularGanancia();
+
         var guardado = ProductosBLL.Guardar(producto);
+
+        if (guardado)
+        {
+            toastService.ShowInfo("Se guardó exitosamente");
+        }
+        else
+            toastService.ShowError("No se pudo guardar.");
+
     }
 
     public void Eliminar()
@@ -181,14 +232,15 @@
         bool eliminado;
 
         eliminado = ProductosBLL.Eliminar(producto.ProductoId);
+        
         if (eliminado)
         {
-            //Llamar el metodo nuevo
-            //Mostrar toast diciendo que terminó
+            Nuevo();
+            toastService.ShowInfo("Se ha eliminado el producto correctamente...");
         }
         else
         {
-            //mostrar toast de que no fue posible eliminar
+            toastService.ShowError("No se ha podido eliminar el pproducto");
         }
 
 
@@ -196,10 +248,15 @@
 
     private void CalculoValorInventario()
     {
+        double costo = producto.Costo;
+        double existencia = producto.Existencia;
+
+        producto.ValorInventario = costo * existencia;
     }
 
     private void CalcularGanancia()
     {
+        producto.Ganancia =(((producto.Precio - producto.Costo) * 100) / producto.Costo);
     }
 
 
