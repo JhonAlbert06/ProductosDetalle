@@ -15,13 +15,11 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddBlazoredToast();
 
-/*
 builder.Services.AddDbContext<Contexto>(options => 
     
     options.UseSqlite(builder.Configuration.GetConnectionString("ConStr"))
     
     );
-*/
 
 var app = builder.Build();
 
