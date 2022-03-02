@@ -22,10 +22,8 @@ namespace Productos_Detalle.Entidades
             this.Cantidad = 0;
             this.Precio = 0;
         }
-        public ProductosDetalle(int productoId, string descripcion, double cantidad, double precio)
+        public ProductosDetalle(string descripcion, double cantidad, double precio)
         {
-            this.Id = 0;
-            this.ProductoId = productoId;
             this.Presentacion = descripcion;
             this.Cantidad = cantidad;
             this.Precio = precio;

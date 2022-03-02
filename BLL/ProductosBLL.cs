@@ -7,173 +7,143 @@ namespace Productos_Detalle.BLL
 {
     public class ProductosBLL
     {
-        
-        public static bool Guardar(Productos producto)
+        private Contexto _contexto;
+
+        private ProductosBLL(Contexto contexto)
         {
-            if (!ExisteDescripcion(producto.Descripcion))
+            _contexto = contexto ;
+        }
+        
+        public bool Guardar(Productos producto)
+        {
+            if (!Existe(producto.Descripcion))
                 return Insertar(producto);
             else 
                 return Modificar(producto);
         }
 
-        private static bool Insertar(Productos producto)
+        private bool Insertar(Productos producto)
         {
             bool paso = false;
-            Contexto contexto = new Contexto();
 
             try
             {
-                if (contexto.Productos.Add(producto) != null);
-                    paso = contexto.SaveChanges() > 0;
+                producto.ValorInventario = producto.Costo * producto.Existencia;
+                _contexto.Productos.Add(producto);
+
+                paso = _contexto.SaveChanges() > 0;
             }
             catch (Exception)
             {
                 throw;
             }
-            finally
-            {
-                contexto.Dispose();
-            }
 
             return paso;
         }
 
-        private static bool Modificar(Productos producto)
+        private bool Modificar(Productos producto)
         {
             bool paso = false;
-            Contexto contexto = new Contexto();
 
             try
             {
-                contexto.Database.ExecuteSqlRaw($"delete from ProductosDetalle where ProductoId={producto.ProductoId}");
+                _contexto.Database.ExecuteSqlRaw($"Delete FROM ProductosDetalle where ProductoId={producto.ProductoId}");
+
                 foreach (var anterior in producto.Detalle)
                 {
-                    contexto.Entry(anterior).State = EntityState.Added;    
+                    _contexto.Entry(anterior).State = EntityState.Added;
                 }
-                contexto.Entry(producto).State = EntityState.Modified;
-                paso = contexto.SaveChanges() > 0;
+
+                _contexto.Entry(producto).State = EntityState.Modified;
+
+                paso = _contexto.SaveChanges() > 0;
             }
             catch (Exception)
             {
                 throw;
             }
-            finally
-            {
-                contexto.Dispose();
-            }
 
             return paso;
         }
 
-        public static bool Eliminar(int id)
+        public bool Eliminar(int id)
         {
             bool paso = false;
-            Contexto contexto = new Contexto();
 
             try
             {
-                var producto = contexto.Productos.Find(id);
-
-                contexto.Entry(producto).State = EntityState.Deleted;
-
-                paso = contexto.SaveChanges() > 0;
+                var producto = _contexto.Productos.Find(id);
+                if (producto != null)
+                {
+                    _contexto.Productos.Remove(producto);
+                    paso = _contexto.SaveChanges() > 0;
+                }
             }
             catch (Exception)
             {
                 throw;
             }
-            finally
-            {
-                contexto.Dispose();
-            }
-
             return paso;
         }
 
-        public static Productos Buscar(int id)
+        public Productos Buscar(int id)
         {
-            Productos producto = new Productos();
-            Contexto contexto = new Contexto();
+            Productos producto;
 
             try
             {
-                producto = contexto.Productos.Include(x => x.Detalle)
-                            .Where(p => p.ProductoId == id)
-                            .SingleOrDefault();
+                producto = _contexto.Productos.Include(x => x.Detalle).Where(p => p.ProductoId == id).SingleOrDefault();
             }
             catch (Exception)
             {
                 throw;
             }
-            finally
-            {
-                contexto.Dispose();
-            }
-
             return producto;
         }
 
-        public static bool ExisteDescripcion(string descripcion)
+        public bool Existe(string descripcion)
         {
-            bool encontrado = false;
-            Contexto contexto = new Contexto();
+            bool está = false;
 
             try
             {
-                encontrado = contexto.Productos.Any(p => p.Descripcion == descripcion);
+                está = _contexto.Productos.Any(e => e.Descripcion == descripcion);
             }
             catch (Exception)
             {
                 throw;
             }
-            finally
-            {
-                contexto.Dispose();
-            }
-
-            return encontrado;
+            return está;
         }
 
-        public static bool Existe(int id)
+        public bool Existe(int id)
         {
-            bool encontrado = false;
-            Contexto contexto = new Contexto();
+             bool esta = false;
 
             try
             {
-                encontrado = contexto.Productos.Any(p => p.ProductoId == id);
+                esta = _contexto.Productos.Any(e => e.ProductoId == id);
             }
             catch (Exception)
             {
                 throw;
             }
-            finally
-            {
-                contexto.Dispose();
-            }
 
-            return encontrado;
+            return esta;
         }
 
-        public static List<Productos> GetList(Expression<Func<Productos, bool>> criterio)
+        public List<Productos> GetList(Expression<Func<Productos, bool>> criterio)
         {
-            
             List<Productos> lista = new List<Productos>();
-            Contexto contexto = new Contexto();
-
             try
             {
-                lista = contexto.Productos.Where(criterio).ToList();
+                lista = _contexto.Productos.Where(criterio).ToList();
             }
             catch (Exception)
             {
                 throw;
             }
-            finally
-            {
-                contexto.Dispose();
-            }
-
+            
             return lista;
         }
 
