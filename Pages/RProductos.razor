@@ -39,12 +39,14 @@
                     </div>
                 </div>
 
+                <hr>
+
                 <div class="row">
 
                     @* Descripción *@
                     <div class="form-group col">
+                        <label>Descripción</label>
                         <div class="input-group">
-                            <span>Descripción</span>
                             <InputText class="form-control" @bind-Value="producto.Descripcion"
                                 placeholder="Descripcion del Producto" />
                             <ValidationMessage For="@(() => producto.Descripcion)" />
@@ -94,7 +96,7 @@
                 </div>
 
                 <form>
-                    <div class="input-group d-flex align-items-end">
+                    <div class="row input-group d-flex align-items-end">
 
                         @* Presentacion *@
                         <div class="form-group col">
@@ -118,7 +120,7 @@
                         </div>
 
 
-                        <button type="button" class="btn btn-success" @onclick="AgregarDetalle">
+                        <button type="button" class="btn btn-success col" @onclick="AgregarDetalle">
                             ➕ Agregar Detalle
                         </button>
 
@@ -130,7 +132,6 @@
                                 <th>Id</th>
                                 <th>Presentacion</th>
                                 <th>Cantidad</th>
-                                <th>Costo</th>
                                 <th>Precio</th>
                             </tr>
                         </thead>
@@ -141,8 +142,9 @@
                                     <td>@item.ProductoId</td>
                                     <td>@item.Presentacion</td>
                                     <td>@item.Cantidad</td>
-                                    <td>@item.Costo</td>
                                     <td>RD$ @item.Precio</td>
+
+                                    <td><span class="btn btn-sm btn-outline-primary oi oi-ban" href="#"  @onclick=" (() => RemoverFila(item)) "> Remover</span></td>
                                 </tr>
                             }
                         </tbody>
@@ -205,28 +207,12 @@
         }
     }
 
-    public void CostoChanged()
-    {
-        PrecioOrCostoChanged();
-        ExistenciaOrCostoChanged();
-    }
-    public void GananciaChanged()
-    {
-        producto.Ganancia = Convert.ToInt32(((producto.Precio - producto.Costo) / producto.Costo) * 100);
-    }
-    public void ExistenciaOrCostoChanged()
-    {
-        producto.ValorInventario = producto.Costo * producto.Existencia;
-    }
-
-    public void PrecioOrCostoChanged()
-    {
-        producto.Ganancia = (int)((producto.Precio - producto.Costo) / producto.Costo) * 100;
-    }
-
     private void AgregarDetalle()
     {
         this.producto.Detalle.Add(new ProductosDetalle(Presentacion, Cantidad, Precio));
+        Presentacion = "";
+        Cantidad = 0;
+        Precio = 0; 
     }
 
     private void RemoverFila(ProductosDetalle item)
