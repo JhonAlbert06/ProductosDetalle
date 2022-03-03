@@ -9,9 +9,9 @@ namespace Productos_Detalle.BLL
     {
         private Contexto _contexto;
 
-        private ProductosBLL(Contexto contexto)
+        public ProductosBLL(Contexto contexto)
         {
-            _contexto = contexto ;
+            _contexto = contexto;
         }
         
         public bool Guardar(Productos producto)
