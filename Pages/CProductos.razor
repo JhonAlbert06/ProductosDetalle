@@ -75,27 +75,28 @@
     public string Criterio { get; set; }
     public List<Productos> lista { get; set; } = new List<Productos>();
 
+    [Inject]
+    public ProductosBLL productosBLL { get; set; }
+
     private void Buscar()
     {
-
-        lista = new List<Productos>();
 
         if (Criterio != null)
         {
             switch(Filtro)
             {
                 case "1":
-                    lista = ProductosBLL.GetList(t => t.ProductoId == int.Parse(Criterio));
+                    lista = productosBLL.GetList(t => t.ProductoId == int.Parse(Criterio));
                 break;
 
                 case "2":
-                    lista = ProductosBLL.GetList(t => t.Descripcion.ToLower().Contains(Criterio.ToLower())); 
+                    lista = productosBLL.GetList(t => t.Descripcion.ToLower().Contains(Criterio.ToLower())); 
                 break;
             }
         }
         else
         {
-            lista = ProductosBLL.GetList(t => true);
+            lista = productosBLL.GetList(t => true);
         }
     }
 }

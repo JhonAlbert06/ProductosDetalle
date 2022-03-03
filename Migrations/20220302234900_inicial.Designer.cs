@@ -10,7 +10,7 @@ using Productos_Detalle.DAL;
 namespace Productos_Detalle.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20220228154124_inicial")]
+    [Migration("20220302234900_inicial")]
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

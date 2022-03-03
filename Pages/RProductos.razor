@@ -1,4 +1,5 @@
 @page "/rproductos"
+@page "/rproductos/{ProductoId:int}"
 
 @inject IToastService toastService
 
@@ -7,7 +8,7 @@
 
     <div className="container">
 
-        <div class="card"  style="box-shadow: 8px 8px rgba(0, 0, 0, 0.26);">
+        <div class="card">
 
             <div class="card-header">
                 <h3>Registro de Productos</h3>
@@ -24,7 +25,7 @@
 
                             <div class="input-group row">
 
-                                <InputNumber @bind-Value="producto.ProductoId" class="form-control col-4" />
+                                <InputNumber @bind-Value="producto.ProductoId" class="form-control col-4 col" />
 
                                 <div class="input-group-append col">
                                     <button type="button" class="btn btn-success input-group-text"
@@ -42,14 +43,18 @@
 
                     @* Descripción *@
                     <div class="form-group col">
-                        <label>Descripción</label>
-                        <InputText class="form-control" @bind-Value="producto.Descripcion" />
-                        <ValidationMessage For="@(() => producto.Descripcion)" />
+                        <div class="input-group">
+                            <span>Descripción</span>
+                            <InputText class="form-control" @bind-Value="producto.Descripcion"
+                                placeholder="Descripcion del Producto" />
+                            <ValidationMessage For="@(() => producto.Descripcion)" />
+                        </div>
                     </div>
 
                 </div>
 
                 <div class="row">
+
                     @* Costo *@
                     <div class="form-group col">
                         <label>Costo</label>
@@ -74,36 +79,19 @@
                     @* Ganacia *@
                     <div class="form-group col">
                         <label>Ganacia</label>
-                        <InputNumber aria-readonly="true" class="form-control" @bind-Value="producto.Ganancia" />
+                        <InputNumber readonly class="form-control" @bind-Value="producto.Ganancia" />
                         <ValidationMessage For="@(() => producto.Ganancia)" />
                     </div>
 
                 </div>
 
-            </div>
+                <hr>
 
-            <div class="card-footer">
+                @* PRODUCTO DETALLE *@
 
-                @* Botones *@
-                <div class="form-group text-center" display: inline-block>
-                    <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">Nuevo</button>
-                    <button type="submit" class="btn btn-lg btn-success">Guardar</button>
-                    <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">Eliminar</button>
+                <div class="card-header">
+                    <h3>Detalle</h3>
                 </div>
-
-            </div>
-
-        </div>
-
-        <br>
-
-        <div class="card">
-
-            <div class="card-header">
-                <h3>Detalle</h3>
-            </div>
-
-            <div class="card-body">
 
                 <form>
                     <div class="input-group d-flex align-items-end">
@@ -111,29 +99,22 @@
                         @* Presentacion *@
                         <div class="form-group col">
                             <label>Presentacion</label>
-                            <InputText class="form-control" @bind-Value="detalle.Presentacion" />
-                            <ValidationMessage For="@(() => detalle.Presentacion)" />
+                            <InputText class="form-control" @bind-Value="Presentacion" />
+                            <ValidationMessage For="@(() => Presentacion)" />
                         </div>
 
-                        @* Costo *@
+                        @* Cantidad *@
                         <div class="form-group col">
-                            <label>Costo</label>
-                            <InputNumber class="form-control" @bind-Value="detalle.Costo" />
-                            <ValidationMessage For="@(() => detalle.Costo)" />
+                            <label>Cantidad</label>
+                            <InputNumber class="form-control" @bind-Value="Cantidad" />
+                            <ValidationMessage For="@(() => Cantidad)" />
                         </div>
 
                         @* Precio *@
                         <div class="form-group col">
                             <label>Precio</label>
-                            <InputNumber class="form-control" @bind-Value="detalle.Precio" />
-                            <ValidationMessage For="@(() => detalle.Precio)" />
-                        </div>
-
-                        @* Ganacia *@
-                        <div class="form-group col">
-                            <label>Ganacia</label>
-                            <InputNumber aria-readonly="true" class="form-control" @bind-Value="detalle.Ganancia" />
-                            <ValidationMessage For="@(() => detalle.Ganancia)" />
+                            <InputNumber class="form-control" @bind-Value="Precio" />
+                            <ValidationMessage For="@(() => Precio)" />
                         </div>
 
 
@@ -170,8 +151,16 @@
 
             </div>
 
-            <div class="card-footer">
 
+        </div>
+
+        <div class="card-footer">
+
+            @* Botones *@
+            <div class="form-group text-center" display: inline-block>
+                <button type="button" class="btn btn-lg btn-primary" @onclick="Nuevo">Nuevo</button>
+                <button type="submit" class="btn btn-lg btn-success">Guardar</button>
+                <button type="button" class="btn btn-lg btn-danger" @onclick="Eliminar">Eliminar</button>
             </div>
 
         </div>
@@ -181,54 +170,73 @@
 
 
 @code {
-    public Productos producto { get; set; } = new Productos();
-    public ProductosDetalle detalle { get; set; } = new ProductosDetalle();
 
-    private void NuevoDetalle()
+    [Parameter]
+    public int ProductoId { get; set; }
+    public Productos producto { get; set; } = new Productos();
+
+    [Inject]
+    public ProductosBLL productosBLL { get; set; }
+
+    public string Presentacion { get; set; }
+    public int Cantidad { get; set; }
+    public double Precio { get; set; }
+
+    protected override void OnInitialized()
     {
-        detalle = new ProductosDetalle();
+        producto.ProductoId = ProductoId;
+        Buscar();
+    }
+
+    public void Buscar()
+    {
+        if (this.producto.ProductoId > 0)
+        {
+            Productos encontrado = productosBLL.Buscar(this.producto.ProductoId);
+            if (encontrado != null)
+            {
+                this.producto = encontrado;
+                toastService.ShowSuccess("Producto encontrado.");
+            }
+            else
+            {
+                toastService.ShowError("No se encontró el producto");
+            }
+        }
+    }
+
+    public void CostoChanged()
+    {
+        PrecioOrCostoChanged();
+        ExistenciaOrCostoChanged();
+    }
+    public void GananciaChanged()
+    {
+        producto.Ganancia = Convert.ToInt32(((producto.Precio - producto.Costo) / producto.Costo) * 100);
+    }
+    public void ExistenciaOrCostoChanged()
+    {
+        producto.ValorInventario = producto.Costo * producto.Existencia;
+    }
+
+    public void PrecioOrCostoChanged()
+    {
+        producto.Ganancia = (int)((producto.Precio - producto.Costo) / producto.Costo) * 100;
     }
 
     private void AgregarDetalle()
     {
-        CalcularGananciaDetalle();
-        detalle.Cantidad = producto.Existencia;
-
-        if (ProductosBLL.Buscar(this.producto.ProductoId) != null)
-        {
-            this.producto.Detalle.Add(this.detalle);
-            Guardar();
-            NuevoDetalle();
-        }
-        else
-        {
-            toastService.ShowError("Se necesita la referencia de un producto existente para guardar sus detalles.");
-        }
+        this.producto.Detalle.Add(new ProductosDetalle(Presentacion, Cantidad, Precio));
     }
+
+    private void RemoverFila(ProductosDetalle item)
+    {
+        this.producto.Detalle.Remove(item);
+    }
+
     private void Nuevo()
     {
         producto = new Productos();
-        NuevoDetalle();
-    }
-
-    private void Buscar()
-    {
-
-        if (producto.ProductoId > 0)
-        {
-            var encontrado = ProductosBLL.Buscar(producto.ProductoId);
-
-            if (encontrado != null)
-            {
-                this.producto = encontrado;
-                toastService.ShowInfo("Producto encontrado...");
-            }
-            else 
-            {
-                toastService.ShowError("Debe indicar el ID de un producto existente...");
-            }
-
-        }
     }
 
     public void Guardar()
@@ -236,9 +244,7 @@
         CalculoValorInventario();
         CalcularGanancia();
 
-        var guardado = ProductosBLL.Guardar(producto);
-
-        if (guardado)
+        if (productosBLL.Guardar(producto))
         {
             toastService.ShowInfo("Se guardó exitosamente");
         }
@@ -251,18 +257,17 @@
     {
         bool eliminado;
 
-        eliminado = ProductosBLL.Eliminar(producto.ProductoId);
-        
+        eliminado = productosBLL.Eliminar(producto.ProductoId);
+
         if (eliminado)
         {
             Nuevo();
-            toastService.ShowInfo("Se ha eliminado el producto correctamente...");
+            toastService.ShowSuccess("Eliminación exitosa");
         }
         else
         {
-            toastService.ShowError("No se ha podido eliminar el pproducto");
+            toastService.ShowError("Eliminación fallida");
         }
-
     }
 
     private void CalculoValorInventario()
@@ -275,11 +280,7 @@
 
     private void CalcularGanancia()
     {
-        producto.Ganancia =(((producto.Precio - producto.Costo) * 100) / producto.Costo);
+        producto.Ganancia = (((producto.Precio - producto.Costo) * 100) / producto.Costo);
     }
 
-    private void CalcularGananciaDetalle()
-    {
-        detalle.Ganancia =(((detalle.Precio - detalle.Costo) * 100) / detalle.Costo);
-    }
 }

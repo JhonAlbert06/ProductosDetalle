@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Productos_Detalle.Data;
 using Productos_Detalle.DAL;
+using Productos_Detalle.BLL;
 using Productos_Detalle.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Blazored.Toast;
@@ -12,16 +12,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 builder.Services.AddBlazoredToast();
 
-/*
+// Aqui inyectamos el DbContext
 builder.Services.AddDbContext<Contexto>(options => 
-    
-    options.UseSqlite(builder.Configuration.GetConnectionString("ConStr"))
-    
-    );
-*/
+    options.UseSqlite(builder.Configuration.GetConnectionString("ConStr"))    
+);
+
+builder.Services.AddTransient<ProductosBLL>();
 
 var app = builder.Build();
 
