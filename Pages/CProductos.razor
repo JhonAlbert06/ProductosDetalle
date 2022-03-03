@@ -17,7 +17,6 @@
     
                 <div class="input-group d-flex align-items-end">
                     <select class="form-control col-2" @bind="Filtro">
-                        <option value="0">Todos</option>
                         <option value="1">Id</option>
                         <option value="2">Descripción</option>
                     </select>
@@ -59,6 +58,7 @@
                         <td>RD$ @item.Precio</td>
                         <td>@item.Ganancia %</td>
                         <td>RD$ @item.ValorInventario</td>
+                        <td><a class="btn btn-sm btn-outline-primary oi oi-eye" href="rproductos/@item.ProductoId">Ver</a></td>
                     </tr>
                 }
             </tbody>
